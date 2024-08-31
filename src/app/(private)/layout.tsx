@@ -1,6 +1,7 @@
 'use client';
 
 import { getMeApi } from '@/apis/auth.api';
+import Header from '@/components/layout/Header';
 import { useAuth } from '@/hooks/useAuth'; // Custom hook for authentication
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
@@ -11,7 +12,6 @@ const PrivateLayout: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const router = useRouter();
   const { user, setUser } = useAuth();
-  console.log('🚀 ~ user:', user);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -30,12 +30,12 @@ const PrivateLayout: React.FC<{ children: React.ReactNode }> = ({
   }, [user, router, setUser]);
 
   if (!user) {
-    return <div>Loading...</div>; // Or a loader component
+    return <div>Loading...</div>;
   }
 
   return (
     <div>
-      {/* Private Layout specific components like header, footer */}
+      <Header />
       {children}
     </div>
   );
