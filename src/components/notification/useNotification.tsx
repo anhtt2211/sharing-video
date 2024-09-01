@@ -7,8 +7,8 @@ import {
 import { useAuth } from '@/hooks/useAuth';
 import { INofification } from '@/interfaces/notification.interface';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import { useQuery, useQueryClient } from 'react-query';
+import { useEffect, useState, useCallback } from 'react';
+import { useInfiniteQuery, useQueryClient } from 'react-query';
 import io from 'socket.io-client';
 
 export const useNotification = () => {
@@ -17,15 +17,26 @@ export const useNotification = () => {
   const [unreadCount, setUnreadCount] = useState(0);
   const router = useRouter();
 
-  const { data: notifications } = useQuery(
-    'notifications',
-    getNotificationsApi,
-    {
-      onSuccess: (data) => {
-        queryClient.setQueryData<INofification[]>('notifications', data);
-      },
-    }
-  );
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, refetch } =
+    useInfiniteQuery(
+      'notifications',
+      ({ pageParam = 1 }) =>
+        getNotificationsApi({ page: pageParam, pageSize: 5 }),
+      {
+        getNextPageParam: (lastPage, allPages) => {
+          return lastPage.length ? allPages.length + 1 : undefined;
+        },
+        onSuccess: (data) => {
+          const allNotifications = data.pages.flat();
+          queryClient.setQueryData<INofification[]>(
+            'notifications',
+            allNotifications
+          );
+        },
+      }
+    );
+
+  const notifications = data?.pages.flat() || [];
 
   useEffect(() => {
     if (!user?.id) return;
@@ -45,16 +56,13 @@ export const useNotification = () => {
     socket.on('newNotification', (newNotification: INofification) => {
       queryClient.setQueryData<INofification[]>(
         'notifications',
-        (oldNotifications) => {
-          if (!oldNotifications) return [newNotification];
-
-          // Add the new notification to the beginning of the array
+        (oldNotifications = []) => {
           return [newNotification, ...oldNotifications];
         }
       );
 
-      // Update unread count
       setUnreadCount((prevCount) => prevCount + 1);
+      refetch();
     });
 
     socket.on('connect_error', (error) => {
@@ -64,10 +72,10 @@ export const useNotification = () => {
     return () => {
       socket.disconnect();
     };
-  }, [user?.id]);
+  }, [user?.id, queryClient, refetch]);
 
   useEffect(() => {
-    if (!notifications) return;
+    if (!notifications.length) return;
 
     const unread = notifications.filter(
       (notification: INofification) => !notification.read
@@ -75,16 +83,30 @@ export const useNotification = () => {
     setUnreadCount(unread);
   }, [notifications]);
 
-  const onClickNotification = async (notification: INofification) => {
-    if (notification.url) {
-      router.push(notification.url);
-    }
-    await markNotificationAsReadApi(notification.id);
-  };
+  const onClickNotification = useCallback(
+    async (notification: INofification) => {
+      if (notification.url) {
+        router.push(notification.url);
+      }
+      await markNotificationAsReadApi(notification.id);
+      queryClient.setQueryData<INofification[]>(
+        'notifications',
+        (oldNotifications = []) =>
+          oldNotifications.map((n) =>
+            n.id === notification.id ? { ...n, read: true } : n
+          )
+      );
+      setUnreadCount((prev) => prev - 1);
+    },
+    [router, queryClient]
+  );
 
   return {
     notifications,
     unreadCount,
     onClickNotification,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
   };
 };

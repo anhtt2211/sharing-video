@@ -1,20 +1,46 @@
 'use client';
 
-import { markNotificationAsReadApi } from '@/apis/notification.api';
 import { useNotification } from '@/components/notification/useNotification';
 import { INofification } from '@/interfaces/notification.interface';
 import { formatDistanceToNow } from 'date-fns';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { FaBell } from 'react-icons/fa';
 
 export const Notifications = () => {
   const [showDropdown, setShowDropdown] = useState(false);
-  const { notifications, unreadCount, onClickNotification } = useNotification();
+  const {
+    notifications,
+    unreadCount,
+    onClickNotification,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useNotification();
+  const dropdownRef = useRef<HTMLDivElement | null>(null);
 
   const toggleNotification = () => {
     setShowDropdown(!showDropdown);
   };
+
+  const handleScroll = () => {
+    const dropdown = dropdownRef.current;
+    if (
+      dropdown &&
+      dropdown.scrollTop + dropdown.clientHeight >= dropdown.scrollHeight - 20
+    ) {
+      if (hasNextPage && !isFetchingNextPage) {
+        fetchNextPage();
+      }
+    }
+  };
+
+  useEffect(() => {
+    const dropdown = dropdownRef.current;
+    if (dropdown) {
+      dropdown.addEventListener('scroll', handleScroll);
+      return () => dropdown.removeEventListener('scroll', handleScroll);
+    }
+  }, [hasNextPage, isFetchingNextPage]);
 
   return (
     <div className='relative'>
@@ -30,18 +56,34 @@ export const Notifications = () => {
         )}
       </button>
       {showDropdown && (
-        <div className='absolute right-0 mt-2 w-80 bg-white rounded-md shadow-lg z-20'>
+        <div
+          ref={dropdownRef}
+          className='absolute right-0 mt-2 w-80 bg-white rounded-md shadow-lg z-20 max-h-96 overflow-y-auto'
+        >
           <div className='py-2'>
             {notifications?.length === 0 ? (
               <p className='text-gray-700 px-4 py-2'>No notifications</p>
             ) : (
-              notifications?.map((notification: INofification) => (
-                <NotificationItem
-                  key={notification.id}
-                  notification={notification}
-                  onClickNotification={() => onClickNotification(notification)}
-                />
-              ))
+              <>
+                {notifications?.map((notification: INofification) => (
+                  <NotificationItem
+                    key={notification.id}
+                    notification={notification}
+                    onClickNotification={() =>
+                      onClickNotification(notification)
+                    }
+                  />
+                ))}
+                {hasNextPage && (
+                  <button
+                    onClick={() => fetchNextPage()}
+                    disabled={isFetchingNextPage}
+                    className='w-full py-2 text-blue-600 hover:bg-blue-50 transition-colors duration-200'
+                  >
+                    {isFetchingNextPage ? 'Loading more...' : 'Load more'}
+                  </button>
+                )}
+              </>
             )}
           </div>
         </div>
@@ -49,7 +91,6 @@ export const Notifications = () => {
     </div>
   );
 };
-
 const NotificationItem = ({
   notification,
   onClickNotification,
