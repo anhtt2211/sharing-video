@@ -2,7 +2,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 
 // Set the default config for axios
-axios.defaults.baseURL = 'http://localhost:8000/api';
+axios.defaults.baseURL = process.env.NEXT_PUBLIC_SERVER_URL;
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 // Request interceptor

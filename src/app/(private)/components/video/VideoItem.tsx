@@ -17,7 +17,6 @@ const VideoCard = ({ video }: { video: IVideo }) => {
         <h2 className='text-xl font-bold mb-2'>{video.title}</h2>
         <p className='text-gray-600'>Shared by: {video.user.username}</p>
         <div className='flex items-center mt-2'></div>
-        <p className='mt-4 text-gray-700'>{video.description}</p>
       </div>
     </div>
   );

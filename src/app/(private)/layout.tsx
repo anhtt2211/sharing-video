@@ -6,12 +6,14 @@ import { useAuth } from '@/hooks/useAuth'; // Custom hook for authentication
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 import React, { useEffect } from 'react';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 const PrivateLayout: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const router = useRouter();
   const { user, setUser } = useAuth();
+  const queryClient = new QueryClient();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -34,10 +36,10 @@ const PrivateLayout: React.FC<{ children: React.ReactNode }> = ({
   }
 
   return (
-    <div>
+    <QueryClientProvider client={queryClient}>
       <Header />
       {children}
-    </div>
+    </QueryClientProvider>
   );
 };
 
