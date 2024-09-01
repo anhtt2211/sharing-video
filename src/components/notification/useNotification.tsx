@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useCallback,useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useInfiniteQuery, useQueryClient } from 'react-query';
 import io from 'socket.io-client';
 
@@ -51,7 +51,6 @@ export const useNotification = () => {
     );
 
     socket.on('connect', () => {
-      console.log('Connected to notification socket');
       socket.emit('register', user.id);
     });
 
@@ -65,10 +64,6 @@ export const useNotification = () => {
 
       setUnreadCount((prevCount) => prevCount + 1);
       refetch();
-    });
-
-    socket.on('connect_error', (error) => {
-      console.error('Socket connection error:', error);
     });
 
     return () => {

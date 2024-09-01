@@ -17,7 +17,7 @@ const schema = yup.object().shape({
     .string()
     .url('Please enter a valid URL')
     .matches(
-      /^(https?\:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+$/,
+      /^(https?:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+$/,
       'Please enter a valid YouTube URL'
     )
     .required('YouTube URL is required'),
@@ -35,14 +35,12 @@ export default function ShareMovie() {
 
   const onSubmit = async (data: FormData) => {
     try {
-      const response = await createVideoApi({
+      await createVideoApi({
         url: data.url,
       });
       setMessage('Video shared successfully!');
-      console.log('Video data:', response);
     } catch (error) {
       setMessage('Failed to share the video. Please try again.');
-      console.error('Error sharing video:', error);
     }
   };
 

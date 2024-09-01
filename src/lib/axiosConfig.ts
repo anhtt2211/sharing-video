@@ -26,13 +26,6 @@ axios.interceptors.response.use(
     return response.data;
   },
   (error) => {
-    if (error.response) {
-      console.error('Response error:', error.response);
-    } else if (error.request) {
-      console.error('No response received:', error.request);
-    } else {
-      console.error('Error', error.message);
-    }
     return Promise.reject(error);
   }
 );
