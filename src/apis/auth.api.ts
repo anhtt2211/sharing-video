@@ -1,10 +1,11 @@
+import axiosClient from '@/lib/axiosConfig';
+
 import {
   ILoginRequest,
   ILoginResponse,
   IRegisterResponse,
   ITokenPayload,
 } from '@/interfaces/auth.interface';
-import axiosClient from '@/lib/axiosConfig';
 
 export const loginApi = async (
   data: ILoginRequest

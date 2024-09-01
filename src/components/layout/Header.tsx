@@ -1,9 +1,11 @@
 'use client';
 
-import { Notifications } from '@/components/notification';
-import { useAuth } from '@/hooks/useAuth';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
+
+import { useAuth } from '@/hooks/useAuth';
+
+import { Notifications } from '@/components/notification';
 
 export default function Header() {
   const router = useRouter();

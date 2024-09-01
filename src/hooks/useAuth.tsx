@@ -1,7 +1,8 @@
 'use client';
 
-import { ITokenPayload } from '@/interfaces/auth.interface';
 import { createContext, ReactNode, useContext, useState } from 'react';
+
+import { ITokenPayload } from '@/interfaces/auth.interface';
 
 // Define the shape of the user context value
 interface AuthContextType {

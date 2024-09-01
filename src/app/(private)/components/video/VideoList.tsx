@@ -1,6 +1,8 @@
+import { useEffect,useRef } from 'react';
+
 import { IVideo } from '@/interfaces/video.interface';
+
 import VideoCard from './VideoItem';
-import { useRef, useEffect } from 'react';
 
 interface VideoListProps {
   videos: IVideo[];

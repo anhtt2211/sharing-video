@@ -1,10 +1,12 @@
 'use client';
 
-import { useNotification } from '@/components/notification/useNotification';
-import { INofification } from '@/interfaces/notification.interface';
 import { formatDistanceToNow } from 'date-fns';
 import { useEffect, useRef, useState } from 'react';
 import { FaBell } from 'react-icons/fa';
+
+import { useNotification } from '@/components/notification/useNotification';
+
+import { INofification } from '@/interfaces/notification.interface';
 
 export const Notifications = () => {
   const [showDropdown, setShowDropdown] = useState(false);

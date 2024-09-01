@@ -1,7 +1,9 @@
 import * as React from 'react';
-import { AuthProvider } from '@/hooks/useAuth';
+
 import '@/styles/colors.css';
 import '@/styles/globals.css';
+
+import { AuthProvider } from '@/hooks/useAuth';
 
 export default function RootLayout({
   children,

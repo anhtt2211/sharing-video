@@ -1,6 +1,7 @@
+import axiosClient from '@/lib/axiosConfig';
+
 import { INofification } from '@/interfaces/notification.interface';
 import { IBaseParams } from '@/interfaces/param.interface';
-import axiosClient from '@/lib/axiosConfig';
 
 export const getNotificationsApi = async ({
   page = 1,

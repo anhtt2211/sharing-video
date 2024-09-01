@@ -1,12 +1,15 @@
 'use client';
 
-import { getMeApi } from '@/apis/auth.api';
-import Header from '@/components/layout/Header';
-import { useAuth } from '@/hooks/useAuth'; // Custom hook for authentication
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 import React, { useEffect } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
+
+import { useAuth } from '@/hooks/useAuth'; // Custom hook for authentication
+
+import Header from '@/components/layout/Header';
+
+import { getMeApi } from '@/apis/auth.api';
 
 const PrivateLayout: React.FC<{ children: React.ReactNode }> = ({
   children,

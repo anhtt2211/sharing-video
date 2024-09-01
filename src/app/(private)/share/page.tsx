@@ -1,9 +1,10 @@
 'use client';
 
-import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import * as yup from 'yup';
+
 import { createVideoApi } from '@/apis/video.api';
 
 interface FormData {

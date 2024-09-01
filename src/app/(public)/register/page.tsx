@@ -1,12 +1,13 @@
 'use client';
 
-import { registerApi } from '@/apis/auth.api'; // Assumed you have a register API similar to login API
+import { yupResolver } from '@hookform/resolvers/yup';
+import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 import React, { useEffect } from 'react';
-import { useForm, FieldError } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { FieldError,useForm } from 'react-hook-form';
 import * as yup from 'yup';
-import Cookies from 'js-cookie';
+
+import { registerApi } from '@/apis/auth.api'; // Assumed you have a register API similar to login API
 
 // Define validation schema
 const schema = yup.object().shape({

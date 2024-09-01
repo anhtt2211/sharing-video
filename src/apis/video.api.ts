@@ -1,7 +1,8 @@
-import { IBaseParams } from '@/interfaces/param.interface';
-import { IPaginateResponse, IResponse } from '@/interfaces/response.interface';
-import { IVideo, IVideoCreate } from '@/interfaces/video.interface';
 import axiosClient from '@/lib/axiosConfig';
+
+import { IBaseParams } from '@/interfaces/param.interface';
+import { IPaginateResponse } from '@/interfaces/response.interface';
+import { IVideo, IVideoCreate } from '@/interfaces/video.interface';
 
 export const getFeedsApi = async ({
   page = 1,

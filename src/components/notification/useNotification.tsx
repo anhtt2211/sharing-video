@@ -1,15 +1,17 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
+import { useCallback,useEffect, useState } from 'react';
+import { useInfiniteQuery, useQueryClient } from 'react-query';
+import io from 'socket.io-client';
+
+import { useAuth } from '@/hooks/useAuth';
+
 import {
   getNotificationsApi,
   markNotificationAsReadApi,
 } from '@/apis/notification.api';
-import { useAuth } from '@/hooks/useAuth';
 import { INofification } from '@/interfaces/notification.interface';
-import { useRouter } from 'next/navigation';
-import { useEffect, useState, useCallback } from 'react';
-import { useInfiniteQuery, useQueryClient } from 'react-query';
-import io from 'socket.io-client';
 
 export const useNotification = () => {
   const { user } = useAuth();
