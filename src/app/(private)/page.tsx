@@ -4,7 +4,7 @@ import { Fragment } from 'react';
 import { useInfiniteQuery } from 'react-query';
 
 import { getFeedsApi } from '@/apis/video.api';
-import VideoList from '@/app/(private)/components/video/VideoList';
+import { VideoList } from '@/app/(private)/components/video/VideoList';
 
 export default function HomePage() {
   const {

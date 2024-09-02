@@ -1,8 +1,8 @@
-import { useEffect,useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { IVideo } from '@/interfaces/video.interface';
 
-import VideoCard from './VideoItem';
+import VideoCard from '../VideoItem/VideoItem';
 
 interface VideoListProps {
   videos: IVideo[];
@@ -11,7 +11,7 @@ interface VideoListProps {
   isFetchingNextPage: boolean;
 }
 
-function VideoList({
+export function VideoList({
   videos,
   fetchNextPage,
   hasNextPage,
@@ -53,5 +53,3 @@ function VideoList({
     </div>
   );
 }
-
-export default VideoList;

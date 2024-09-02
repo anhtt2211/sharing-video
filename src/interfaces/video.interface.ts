@@ -8,6 +8,8 @@ export interface IVideo {
   thumbnailUrl: string;
   url: string;
   user: IUser;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface IVideoCreate {
