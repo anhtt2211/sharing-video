@@ -11,7 +11,7 @@ export interface ILoginResponse {
   accessToken: string;
 }
 
-export type IRegisterResponse = ILoginResponse
+export type IRegisterResponse = ILoginResponse;
 
 export interface ITokenPayload {
   id: string;

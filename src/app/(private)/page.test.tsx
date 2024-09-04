@@ -1,9 +1,11 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect';
+import React from 'react';
 import { useInfiniteQuery } from 'react-query';
-import HomePage from './page';
+import '@testing-library/jest-dom/extend-expect';
+
 import { VideoList } from '@/app/(private)/components/video/VideoList';
+
+import HomePage from './page';
 
 jest.mock('react-query');
 jest.mock('@/app/(private)/components/video/VideoList');

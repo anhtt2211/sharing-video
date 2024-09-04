@@ -4,7 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 import React from 'react';
-import { FieldError,useForm } from 'react-hook-form';
+import { FieldError, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
 import { loginApi } from '@/apis/auth.api';

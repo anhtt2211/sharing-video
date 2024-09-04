@@ -1,9 +1,11 @@
+import { render, screen } from '@testing-library/react';
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect';
-import { VideoList } from './VideoList';
-import { IVideo } from '@/interfaces/video.interface';
 import { act } from 'react';
+import '@testing-library/jest-dom/extend-expect';
+
+import { IVideo } from '@/interfaces/video.interface';
+
+import { VideoList } from './VideoList';
 
 // Define a simple mock for testing
 class IntersectionObserverMock {

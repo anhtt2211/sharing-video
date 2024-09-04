@@ -1,8 +1,9 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
-import VideoCard from './VideoItem';
-import '@testing-library/jest-dom/extend-expect';
+import React from 'react';
 import { act } from 'react';
+import '@testing-library/jest-dom/extend-expect';
+
+import VideoCard from './VideoItem';
 
 describe('VideoCard', () => {
   const mockVideo = {
